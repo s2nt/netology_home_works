@@ -15,7 +15,7 @@
 * [Критерии сдачи](#Критерии-сдачи)
 * [Как правильно задавать вопросы дипломному руководителю](#Как-правильно-задавать-вопросы-дипломному-руководителю) 
 
---------- ![Alt текст]()
+---------
 
 ## Задача
 Ключевая задача — разработать отказоустойчивую инфраструктуру для сайта, включающую мониторинг, сбор логов и резервное копирование основных данных. Инфраструктура должна размещаться в [Yandex Cloud](https://cloud.yandex.com/) и отвечать минимальным стандартам безопасности: запрещается выкладывать токен от облака в git. Используйте [инструкцию](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart#get-credentials).
@@ -44,13 +44,6 @@
 
 ![Alt текст](https://github.com/s2nt/netology_home_works/blob/c6becacb86106e37cf401c0fe55a63a1329a745a/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-02%20185730.png)
 
-
-
-
-
-![Alt текст]()
-
-![Alt текст]()
 ### Сайт
 Создайте две ВМ в разных зонах, установите на них сервер nginx, если его там нет. ОС и содержимое ВМ должно быть идентичным, это будут наши веб-сервера.
 
@@ -84,23 +77,26 @@
 ### Мониторинг
 Создайте ВМ, разверните на ней Zabbix. На каждую ВМ установите Zabbix Agent, настройте агенты на отправление метрик в Zabbix. 
 
-![Alt текст]()
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20021039.png)
+
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20030129.png)
 
 Настройте дешборды с отображением метрик, минимальный набор — по принципу USE (Utilization, Saturation, Errors) для CPU, RAM, диски, сеть, http запросов к веб-серверам. Добавьте необходимые tresholds на соответствующие графики.
 
-![Alt текст]()
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20035436.png)
 
-![Alt текст]()
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20035442.png)
 
 ### Логи
 Cоздайте ВМ, разверните на ней Elasticsearch. Установите filebeat в ВМ к веб-серверам, настройте на отправку access.log, error.log nginx в Elasticsearch.
 
-![Alt текст]()
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20042622.png)
+
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20045614.png)
 
 Создайте ВМ, разверните на ней Kibana, сконфигурируйте соединение с Elasticsearch.
 
-![Alt текст]()
-
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20044414.png)
 
 ### Сеть
 Разверните один VPC. Сервера web, Elasticsearch поместите в приватные подсети. Сервера Zabbix, Kibana, application load balancer определите в публичную подсеть.
@@ -108,6 +104,10 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 Настройте [Security Groups](https://cloud.yandex.com/docs/vpc/concepts/security-groups) соответствующих сервисов на входящий трафик только к нужным портам.
 
 Настройте ВМ с публичным адресом, в которой будет открыт только один порт — ssh.  Эта вм будет реализовывать концепцию  [bastion host]( https://cloud.yandex.ru/docs/tutorials/routing/bastion) . Синоним "bastion host" - "Jump host". Подключение  ansible к серверам web и Elasticsearch через данный bastion host можно сделать с помощью  [ProxyCommand](https://docs.ansible.com/ansible/latest/network/user_guide/network_debug_troubleshooting.html#network-delegate-to-vs-proxycommand) . Допускается установка и запуск ansible непосредственно на bastion host.(Этот вариант легче в настройке)
+
+Правило Bastion host
+
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20193059.png)
 
 ![Alt текст](https://github.com/s2nt/netology_home_works/blob/805e1af838b7b2ab977b8e2bb543dddc4714293b/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-02%20215014.png)
 
