@@ -98,6 +98,10 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 ![Alt текст](https://github.com/s2nt/netology_home_works/blob/3c380817d2fc4cfe368a595a416f6a076a984f74/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20044414.png)
 
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/b54284c94a737de4922157aca70e7935cf85fc77/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20045828.png)
+
+![Alt текст](https://github.com/s2nt/netology_home_works/blob/8eb1a52c4ff12b1fa20e9f37abe40b511eb8b24c/Diplom/Screen/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-12-03%20181545.png)
+
 ### Сеть
 Разверните один VPC. Сервера web, Elasticsearch поместите в приватные подсети. Сервера Zabbix, Kibana, application load balancer определите в публичную подсеть.
 
