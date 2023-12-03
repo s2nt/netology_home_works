@@ -1,0 +1,54 @@
+---
+- name: Установка Zabbix
+  hosts: mon
+  become: true
+
+  tasks:
+    - name: Загрузка Zabbix репозитория
+      shell: wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu22.04_all.deb
+      args:
+        chdir: /tmp
+
+    - name: Установка Zabbix репозитория
+      shell: dpkg -i zabbix-release_6.0-4+ubuntu22.04_all.deb
+      args:
+        chdir: /tmp
+
+    - name: Обновление пакетов
+      apt:
+        update_cache: yes
+
+    - name: Установка необходимых пакетов Zabbix
+      apt:
+        name:
+          - zabbix-server-pgsql
+          - zabbix-frontend-php
+          - php8.1-pgsql
+          - zabbix-apache-conf
+          - zabbix-sql-scripts
+          - zabbix-agent
+        state: present
+
+    - name: Создание пользователя и базы данных PostgreSQL для Zabbix
+      shell: |
+        sudo -u postgres createuser --pwprompt zabbix
+        sudo -u postgres createdb -O zabbix zabbix
+        zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
+      args:
+        executable: /bin/bash
+
+    - name: Настройка DBPassword в конфигурационном файле Zabbix
+      lineinfile:
+        path: /etc/zabbix/zabbix_server.conf
+        regexp: '^DBPassword='
+        line: 'DBPassword=159753'
+
+    - name: Перезапуск служб Zabbix
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      loop:
+        - zabbix-server
+        - zabbix-agent
+        - apache2
